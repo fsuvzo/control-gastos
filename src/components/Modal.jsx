@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Mensaje from './Mensaje'
 import CerrarBtn from '../img/cerrar.svg'
-const Modal = ({setModal, animarModal,setAnimarModal}) => {
+const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
 
     const [nombre, setNombre] = useState('')
     const [cantidad, setCantidad] = useState('')    
@@ -13,19 +13,22 @@ const Modal = ({setModal, animarModal,setAnimarModal}) => {
 
         setTimeout(() => {
             setModal(false)
-        }, 800);
+        }, 500);
     }
     const handleSubmit= e => {
         e.preventDefault()
-        if([nombre, cantidad, categoria].includes('')){
+        if([nombre, cantidad, categoria ].includes('')){
             setMensaje('Todos los campos son obligatorios')
 
             setTimeout(() => {
                 setMensaje('')
-            }, 3000);
-            return;
+            }, 3000)
+            return
         }
+
+        guardarGasto({nombre, cantidad, categoria})
     }
+    
     return (
         <div className='modal'>
             <div className='cerrar-modal'>
@@ -52,7 +55,7 @@ const Modal = ({setModal, animarModal,setAnimarModal}) => {
                         type="text"
                         placeholder='Añade el Nombre del Gasto'
                         value={nombre}
-                        onChange={e=>setNombre(e.target.value)}
+                        onChange={e => setNombre(e.target.value)}
                     />
                 </div>
 
@@ -84,10 +87,6 @@ const Modal = ({setModal, animarModal,setAnimarModal}) => {
                         <option value="ocio">Ocio</option>
                         <option value="salud">Salud</option>
                         <option value="suscripciones">Suscripciones</option>
-                        <option value="deportes">Deportes</option>
-                        <option value="novia">Novia</option>
-                        <option value="pasajes">Pasajes</option>
-                        <option value="regalos">Regalos</option>
                     </select>
 
                 </div>
